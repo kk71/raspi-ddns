@@ -9,8 +9,8 @@ author:kK(fkfkbill@gmail.com)
 # WARNING! only A name is supported
 domains = [
     {
-        "email": "",
-        "password": "",
+        "email": "fkfkbill@gmail.com",
+        "password": "fkbillnkcfd91C++",
         "dns": {
             "imkk.me": ["@"],
         },
