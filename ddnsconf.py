@@ -9,8 +9,8 @@ author:kK(fkfkbill@gmail.com)
 #WARNING! only A name is supported
 domains=[
 	{
-        "email":"fkfkbill@gmail.com",
-        "password":"fkbillnkcfd91C++",
+        "email":"",
+        "password":"",
         "dns":{
             "kkblog.org":["@","www"],
             "kkhome.org":["@","www"],

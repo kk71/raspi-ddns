@@ -4,9 +4,9 @@ Raspi-watch-dog
 raspberry pi 健康监护以及ddns（dnspod的）
 
 ### 运行环境
-python3.3+：python.org安装。
-curl:可通过apt-get安装。
-bash 4+
+* python3.3+：python.org安装。
+* curl:可通过apt-get安装。
+* bash 4+
 
 
 ### 文件目录
