@@ -4,7 +4,7 @@
 #raspberry pi watchdog script
 #author:kK
 
-s=`ps -ef|grep "bash\s.?raspdog.sh"`;
+s=`ps -ef|egrep "bash\s.*raspdog.sh"`;
 if [[ $s == "" ]];then
     echo "no dog is running."
     exit

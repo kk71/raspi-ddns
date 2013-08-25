@@ -11,12 +11,12 @@
 logfile="dog.log";
 
 #interval
-interval=3s;
+interval=30s;
 
 
 function put()
 {
-    echo $* #>> $logfile;
+    echo $* >> $logfile;
 }
 
 function check_net_connection()

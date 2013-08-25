@@ -12,9 +12,7 @@ domains=[
         "email":"",
         "password":"",
         "dns":{
-            "kkblog.org":["@","www"],
             "kkhome.org":["@","www"],
-            "didi.hk":["@","www"],
         },
     },
 ]
