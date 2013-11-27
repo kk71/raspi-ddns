@@ -10,4 +10,3 @@ ExecStart=/bin/bash /root/raspi-ddns/raspi-ddns.sh -systemd
 [Install]
 WantedBy=multi-user.target
 Also=NetworkManager.service
-Alias=ddns

@@ -22,7 +22,7 @@ then run:
 
 for systemd service installation,after that,run
 ```bash
-    # cp raspi-ddns/raspi-ddns.service /etc/systemd/system/raspi-ddns.service 
+    # cp raspi-ddns/ddns.service /etc/systemd/system/ddns.service 
     # systemctl enable ddns
 ```
 to enable ddns as a service at the startup of the raspberry pi.
