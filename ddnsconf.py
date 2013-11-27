@@ -1,12 +1,12 @@
 #coding=utf-8
 '''
-raspi watchdog ddns configurations
+raspi ddns configurations
 
 author:kK(fkfkbill@gmail.com)
 '''
 
-#dnspod accounts and domains
-#WARNING! only A name is supported
+# dnspod accounts and domains
+# WARNING! only A name is supported
 domains=[
 	{
         "email":"",

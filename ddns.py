@@ -2,21 +2,20 @@
 #coding=utf-8
 '''
 raspi watchdog
-
-
 author:kK(fkfkbill@gmail.com)
-'''
 
+usage:
+./ddns.py         :normally startup
+/ddns.py -systemd :started by systemd(log into journal)
+'''
 
 from dnspod import apicn
 import ddnsconf
 import sys
-from urllib import request
-from datetime import datetime
+import logging
 
 
 
-#====================================
 def validation():
     '''
 validate the configures
@@ -44,13 +43,11 @@ validate the configures
             for sub_domain in account["dns"][dns]:
                 if type(sub_domain)!=str or sub_domain=="":
                     raise domains_config_error("sub domain must be strs")
-
     return True
 
 
 
 
-#====================================
 def sync_domains():
     '''
 sync domains listed in config.py
@@ -68,16 +65,14 @@ sync domains listed in config.py
                                                        password=account["password"])()
                     domain_id=domain_creation["domain"]["id"]
                 except:
-                    print("domain named '%s' doesn't exist and is unable to create."%domain_name , 
-                          file=sys.stderr)
+                    logging.warn("domain named '%s' doesn't exist and is unable to create."%domain_name)
                     continue
             try:#fetch record list for domain_name
                 records=apicn.RecordList(domain_id=domain_id,
                                          email=account["email"],
                                          password=account["password"])()["records"]
             except:
-                print("fetch record list for domain '%s' failed."%domain_name,
-                      file=sys.stderr)
+                logging.error("fetch record list for domain '%s' failed."%domain_name)
                 continue
             record_list={}
             for per_record in records:
@@ -96,8 +91,7 @@ sync domains listed in config.py
                                            email=account["email"],
                                            password=account["password"])()
                     except:
-                        print("fail to create new record '%s' for '%s'"%(sub_domain,domain_name),
-                              file=sys.stderr)
+                        logging.error("fail to create new record '%s' for '%s'"%(sub_domain,domain_name))
                 else:
                     try:
                         apicn.RecordDdns(record_id=record_list[sub_domain],
@@ -109,14 +103,17 @@ sync domains listed in config.py
                                          email=account["email"],
                                          password=account["password"])()
                     except:
-                        print("failed to refresh record '%s' at '%s'."%(sub_domain,domain_name),
-                              file=sys.stderr)
+                        logging.error("failed to refresh record '%s' at '%s'."%(sub_domain,domain_name))
 
 
 
-#====================================
+
 if __name__=="__main__":
+    if len(sys.argv)==2 and sys.argv[1].lower()=="-systemd":
+        logging.basicConfig(level=logging.WARN,format="%(message)s")
+    else:
+        logging.basicConfig(filename="ddns.log",level=logging.WARN,format="%(asctime)-15s : %(message)s")
     if validation():
-        print("%s:config validation passed."%datetime.now())
+        logging.info("config validation passed.")
         sync_domains()
-        print("finished.")
+        logging.info("finished.")

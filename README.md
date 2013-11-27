@@ -1,17 +1,40 @@
-Raspi-watch-dog
+Raspi-ddns
 ===============
 
-raspberry pi 健康监护以及ddns（dnspod的）
+raspberry pi ddns(dynamic dns)
 
-### 运行环境
-* python3.3+：python.org安装。
-* curl:可通过apt-get安装。
-* bash 4+
+## environment
+* python3.3+
+* curl
+* bash
+* systemd(for service support)
+* network manager(for network,optional)
 
 
-### 文件目录
-* dnspod:dnspod的sdk(py3k)
-* ddns.py:动态域名解析工具
-* ddnsconf.py:动态域名解析配置
-* dog.sh:启动监控
-* stop.sh:停止监控
+## usage alongside systemd
+
+    clone git repo in root home dir so that it'll be reachable for systemd to start it as a daemon. Note if you'd like to put elsewhere(but must be under a root folder),change the script pathname in raspi-ddns.service otherwise bash won't find it.
+    then run:
+'''bash
+        # cd /root
+        # git clone https://github.com/kk71/raspi-ddns.git
+'''
+
+    for systemd service installation,after that,run
+'''bash
+        # cp raspi-ddns/raspi-ddns.service /etc/systemd/system/raspi-ddns.service 
+        # systemctl enable ddns
+'''
+    to enable ddns as a service at the startup of the raspberry pi.
+
+    to start/stop rasp-ddns immediately,use:
+'''bash
+        # systemctl start ddns
+        # systemctl stop ddns
+'''
+
+    for normal usage without systemd,
+'''bash
+        # ./raspi-ddns.sh
+'''
+    and all logs are in ddns.log

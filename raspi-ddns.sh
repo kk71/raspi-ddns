@@ -4,22 +4,13 @@
 #raspberry pi watchdog script
 #author:kK
 
-#change dir to
-#cd ""
-
-#dog logfile
-logfile="dog.log";
-
 #interval
 interval=30s;
 
+#change to cuurent dir
+cd $(`dirname $0`;pwd);
 
-function put()
-{
-    echo $* >> $logfile;
-}
-
-function check_net_connection()
+function check_internet_connection()
 {
     baidu_header=`curl -I -s http://www.baidu.com`;
     if [ $? -ne 0 ];then
@@ -33,22 +24,21 @@ function check_net_connection()
     fi
 }
 
-put "raspi watchdog is working";
-put `date`;
+echo "Raspi ddns started.";
 internet_connection=0;
 while :; do
-    if check_net_connection;then
+    if check_internet_connection; then
         if [ $internet_connection -eq 0 ];then
-            put "internet connection established.$`date`"
+            echo "Internet connection established.$`date`"
             internet_connection=1;
         fi
-        put `python3 ddns.py`;
+        echo `python3 ddns.py`;
         if [ $? -ne 0 ];then
-            put "ddns tool error.";
+            echo "ddns tool error.";
         fi
     else
         if [ $internet_connection -ne 0 ];then
-            put "no internet connection. $`date`"
+            echo "No internet connection. $`date`" >> /dev/stderr
             internet_connection=0;
         fi
     fi

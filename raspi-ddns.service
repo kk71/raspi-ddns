@@ -1,0 +1,13 @@
+[Unit]
+Description=Raspberry Pi dynamic DNS
+Wants=network.target
+
+[Service]
+Type=simple
+# note! : change raspi ddns bash script here
+ExecStart=/bin/bash /root/raspi-ddns/raspi-ddns.sh -systemd
+
+[Install]
+WantedBy=multi-user.target
+Also=NetworkManager.service
+Alias=ddns
