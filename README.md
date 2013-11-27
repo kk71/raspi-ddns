@@ -15,26 +15,26 @@ raspberry pi ddns(dynamic dns)
 
     clone git repo in root home dir so that it'll be reachable for systemd to start it as a daemon. Note if you'd like to put elsewhere(but must be under a root folder),change the script pathname in raspi-ddns.service otherwise bash won't find it.
     then run:
-'''bash
+bash'''
         # cd /root
         # git clone https://github.com/kk71/raspi-ddns.git
 '''
 
     for systemd service installation,after that,run
-'''bash
+bash'''
         # cp raspi-ddns/raspi-ddns.service /etc/systemd/system/raspi-ddns.service 
         # systemctl enable ddns
 '''
     to enable ddns as a service at the startup of the raspberry pi.
 
     to start/stop rasp-ddns immediately,use:
-'''bash
+bash'''
         # systemctl start ddns
         # systemctl stop ddns
 '''
 
     for normal usage without systemd,
-'''bash
+bash'''
         # ./raspi-ddns.sh
 '''
     and all logs are in ddns.log
