@@ -8,7 +8,7 @@
 interval=30s;
 
 #change to cuurent dir
-cd $(`dirname $0`;pwd);
+cd `dirname $0`;
 
 function check_internet_connection()
 {
