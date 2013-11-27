@@ -32,7 +32,11 @@ while :; do
             echo "Internet connection established.$`date`"
             internet_connection=1;
         fi
-        echo `python3 ddns.py`;
+        if [[ $1 == "-systemd" ]]; then
+            echo `python3 ddns.py -systemd`;
+        else
+            python3 ddns.py >> /dev/null
+        fi
         if [ $? -ne 0 ];then
             echo "ddns tool error.";
         fi
