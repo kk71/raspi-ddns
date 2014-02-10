@@ -5,36 +5,36 @@ raspberry pi ddns(dynamic dns)
 
 ## environment
 * python3.3+
-* curl
 * bash
 * systemd(for service support)
-* network manager(for network,optional)
+* netctl(for network, optional)
 
 
-## usage alongside systemd
+## Usage alongside systemd
 
-clone git repo in root home dir so that it\'ll be reachable for systemd to start it as a daemon. Note if you'd like to put elsewhere(but must be under a root folder),change the script pathname in raspi-ddns.service otherwise bash won't find it.
+clone git repo in root home dir so that it\'ll be reachable for systemd to start it as a daemon. 
+Note if you'd like to put elsewhere(but must be under a root folder),change the script pathname in raspi-ddns.service otherwise bash won't find it.
 then run:
 ```bash
-    # cd /root
-    # git clone https://github.com/kk71/raspi-ddns.git
+    #in root user
+    cd
+    git clone https://github.com/kk71/raspi-ddns.git
 ```
 
-for systemd service installation,after that,run
+for systemd service installation, after that,run
 ```bash
-    # cp raspi-ddns/ddns.service /etc/systemd/system/ddns.service 
-    # systemctl enable ddns
-```
-to enable ddns as a service at the startup of the raspberry pi.
-
-to start/stop rasp-ddns immediately,use:
-```bash
-    # systemctl start ddns
-    # systemctl stop ddns
+    #in root user
+    ./raspi-ddns.sh install-service [time interval] [interface]
 ```
 
-for normal usage without systemd,
+note:
+* time interval defined the ddns interval
+* interface is the network interface to access the Internet directly, 
+it must has it's standalone IP in public Internet. 
+If you ignored it, then network availibility check is ignored too.
+
+to disable and stop rasp-ddns immediately,use:
 ```bash
-    # ./raspi-ddns.sh
+    #in root user
+    ./raspi-ddns.sh delete-service
 ```
-and all logs are in ddns.log
