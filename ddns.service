@@ -1,7 +1,7 @@
 [Unit]
 Description=Raspberry Pi dynamic DNS
 Wants=network.target
-After=ntpd.Service
+After=ntpd.service
 
 [Service]
 Type=simple

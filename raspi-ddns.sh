@@ -74,24 +74,24 @@ elif [[ $1 == "daemon" ]];then
         fi
     }
 
-    echo "Raspi ddns started.";
+    put "Raspi ddns started.";
     internet_connection=0; #0 stand for no Internet access
     while :; do
         check_internet_connection;
         if [ $? -eq 0 ]; then
             if [ $internet_connection -eq 0 ];then
-                echo "Internet connection established. $`date`"
+                put "Internet connection established. $`date`"
                 internet_connection=1;
             fi
             if [[ $1 == "daemon" ]]; then
-                echo `python3 ddns.py`;
+                put `./ddns.py`;
             fi
             if [ $? -ne 0 ];then
-                echo "ddns tool error. reinstall it from git.";
+                put "ddns tool error. reinstall it from git.";
             fi
         else
             if [ $internet_connection -eq 1 ];then
-                echo "No internet connection. $`date`" >> /dev/stderr
+                put "No internet connection. $`date`" >> /dev/stderr
                 internet_connection=0;
             fi
         fi

@@ -3,7 +3,7 @@ Raspi-ddns
 
 raspberry pi ddns(dynamic dns)
 
-## environment
+## Environment
 * python3.3+
 * bash
 * systemd(for service support)

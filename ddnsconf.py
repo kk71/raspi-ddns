@@ -12,7 +12,7 @@ domains = [
         "email": "",
         "password": "",
         "dns": {
-            "kkhome.org": ["@", "www"],
+            "imkk.me": ["@"],
         },
     },
 ]
