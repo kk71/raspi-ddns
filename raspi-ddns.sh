@@ -46,13 +46,21 @@ elif [[ $1 == "daemon" ]];then
     #0:connection established. 
     #1:network interface not configured or ip not in public internet
     {
+        #if net_interface is not set, pass network check.
+        if [[ net_interface == "" ]];then
+            put "network check is passed."
+            return 0
+        fi
+
         #get public ip
         ifconfigs=(`ifconfig $net_interface|grep inet`);
         #for some archlinux net-tools are not installed by default.
         if [ $? == 127 ];then
             put "ifconfig is not installed, installing..."
             pacman -S --noconfirm net-tools
-            ifconfigs=(`ifconfig $net_interface|grep inet`);
+        elif [ $? != 1 ];then
+            #net interface not ready.
+            return 1
         fi
         inet=${ifconfigs[1]};
         if [[ inet == "" || inet == "127.0.0.1" ]];then
@@ -77,7 +85,9 @@ elif [[ $1 == "daemon" ]];then
     put "Raspi ddns started.";
     internet_connection=0; #0 stand for no Internet access
     while :; do
-        check_internet_connection;
+        if [[ $net_interface != "" ]];then
+            check_internet_connection;
+        fi
         if [ $? -eq 0 ]; then
             if [ $internet_connection -eq 0 ];then
                 put "Internet connection established. $`date`"
@@ -87,7 +97,7 @@ elif [[ $1 == "daemon" ]];then
                 put `./ddns.py`;
             fi
             if [ $? -ne 0 ];then
-                put "ddns tool error. reinstall it from git.";
+                put "ddns.py not found. Please reinstall it from git.";
             fi
         else
             if [ $internet_connection -eq 1 ];then
